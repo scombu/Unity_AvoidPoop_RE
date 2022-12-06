@@ -13,14 +13,18 @@ public class Player : MonoBehaviour
     [SerializeField]private float speed = 3;
 
     private float horizontal;
+    public AudioClip splat;
+    public AudioSource sfxplayer;
 
-    
+
 
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         renderer = GetComponent<SpriteRenderer>();
+        sfxplayer = GetComponent<AudioSource>();
+        sfxplayer.clip = splat;
     }
 
     void FixedUpdate()
@@ -63,5 +67,11 @@ public class Player : MonoBehaviour
         if (worlpos.x < 0.05f) worlpos.x = 0.05f;
         if (worlpos.x > 0.95f) worlpos.x = 0.95f;
         this.transform.position = Camera.main.ViewportToWorldPoint(worlpos);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "New tag")
+        sfxplayer.Play();
     }
 }

@@ -30,13 +30,17 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject panel;
 
+    public AudioSource bgmplayer;
+    public AudioClip gameplay;
+    public AudioClip gameover;
+
     public bool stopTrigger = true;
 
     private bool isgameover = false;
 
     void Start()
     {
-        
+        bgmplayer = GetComponent<AudioSource>();
     }
 
     public void GameStart()
@@ -44,12 +48,18 @@ public class GameManager : MonoBehaviour
         score = 0;
         scoreTxt.text = "Score : " + score;
         isgameover = false;
+        bgmplayer.Stop();
+        bgmplayer.clip = gameplay;
+        bgmplayer.Play();
         stopTrigger = true;
         StartCoroutine(CreatepoopRoutine());
         panel.SetActive(false);
     }
         public void GameOver()
     {
+        bgmplayer.Stop();
+        bgmplayer.clip = gameover;
+        bgmplayer.Play();
         isgameover = true;
         stopTrigger = false;      
         StopCoroutine(CreatepoopRoutine());
