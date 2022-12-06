@@ -41,6 +41,9 @@ public class GameManager : MonoBehaviour
 
     public void GameStart()
     {
+        score = 0;
+        scoreTxt.text = "Score : " + score;
+        isgameover = false;
         stopTrigger = true;
         StartCoroutine(CreatepoopRoutine());
         panel.SetActive(false);
@@ -66,18 +69,15 @@ public class GameManager : MonoBehaviour
             score++;
             scoreTxt.text = "Score : " + score;
         }
-        else
-        {
-            return;
-        }    
+       
     }
 
     IEnumerator CreatepoopRoutine()
     {
-        while(true)
+        while(isgameover != true)
         {
             CreatePoop();
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.4f);
         }
     }
     private void CreatePoop()
